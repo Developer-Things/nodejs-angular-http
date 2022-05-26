@@ -1,0 +1,41 @@
+const express=require('express')
+const app=express()
+const mongoose = require('mongoose')
+// createmethod
+mongoose.connect('mongodb://localhost:27017/node-angular', { useNewUrlParser: true }, err => {//connecting method
+    if (!err) {
+        console.log('db is connected')
+    }
+    else {
+        console.log('db error')
+    }
+})
+const newschema = new mongoose.Schema({ //write schema
+    email: String,
+    username:String,
+    password:String
+})
+const newmodel = new mongoose.model('lists', newschema)//collection create
+app.get('/reg', (req, res) => {
+newmodel.insertMany({
+    email:"vivek@gmail.cosm",username:"vivek12",password:"vivek123@"
+}, function (err, data) {
+    if (err) {
+        res.json({ message: err })
+    }
+    else {
+        res.json({ success: data })
+    }
+})
+})
+app.get('/getRecords',function(req,res){
+    res.json({
+        "statusCode":200,
+        "statusMessage":"success!"
+    })
+})
+
+port=3000
+app.listen(port,(req,res)=>{
+console.log('server start '+port)
+})
